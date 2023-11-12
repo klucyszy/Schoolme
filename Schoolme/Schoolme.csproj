@@ -11,6 +11,9 @@
       <Content Include="..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
+      <Content Include="..\Readme.md">
+        <Link>Readme.md</Link>
+      </Content>
     </ItemGroup>
 
     <ItemGroup>
