@@ -5,10 +5,15 @@ public abstract class AggregateRoot
     private readonly List<DomainEvent> _domainEvents = new();
     
     public Guid Id { get; protected set; }
-    
-    public int Version { get; protected set; }
+
+    public int Version { get; private set; } = 1;
     
     public IReadOnlyList<DomainEvent> DomainEvents => _domainEvents.AsReadOnly();
+    
+    protected void IncrementVersion()
+    {
+        Version++;
+    }
     
     protected void AddDomainEvent(DomainEvent domainEvent)
     {
@@ -21,12 +26,4 @@ public abstract class AggregateRoot
     }
 }
 
-public abstract record DomainEvent(
-    Guid Id,
-    Guid AggregateId,
-    Guid CorrelationId,
-    Guid CausationId,
-    DateTime CreatedAt,
-    int Version,
-    bool IsPublished
-);
+public abstract record DomainEvent;
