@@ -1,0 +1,23 @@
+﻿version: '3.8'
+
+services:
+  sql:
+    image: mcr.microsoft.com/mssql/server:latest
+    container_name: schoolmesql
+    environment:
+      MSSQL_SA_PASSWORD: SchoolmeAdmin1!
+      ACCEPT_EULA: 1
+      MSSQL_ENABLE_CLR: true
+    ports:
+      - 1433:1433
+    volumes:
+      - schoolmesql-db-data:/var/opt/mssql
+    networks:
+      - schoolme
+
+volumes:
+  schoolmesql-db-data:
+
+networks:
+  schoolme:
+    name: schoolme
