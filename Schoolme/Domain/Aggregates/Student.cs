@@ -5,7 +5,7 @@ using Schoolme.Domain.ValueObjects;
 
 namespace Schoolme.Domain.Aggregates;
 
-public class Student : AggregateRoot, IAuditEntity
+public sealed class Student : AggregateRoot, IAuditEntity
 {
     private ICollection<CourseEnrollment> _courses;
     
@@ -27,14 +27,14 @@ public class Student : AggregateRoot, IAuditEntity
     
     public IReadOnlyCollection<CourseEnrollment> Courses => _courses.ToList().AsReadOnly();
     
-    public void EnrollToCourse(Course course)
+    public void EnrollToCourse(Course? course)
     {
         if (course is null)
         {
             throw new ArgumentNullException(nameof(course));
         }
 
-        if (UserIsAlreadyEnrolledForCourse(course))
+        if (UserIsAlreadyEnrolledForCourse(course.Id))
         {
             throw new InvalidOperationException($"Student {Id} is already enrolled for course {course.Id}");
         }
@@ -45,9 +45,9 @@ public class Student : AggregateRoot, IAuditEntity
         IncrementVersion();
     }
     
-    private bool UserIsAlreadyEnrolledForCourse(Course course)
+    private bool UserIsAlreadyEnrolledForCourse(Guid courseId)
     {
-        return _courses.Any(x => x.CourseId == course.Id);
+        return _courses.Any(x => x.CourseId == courseId);
     }
 }
 

@@ -2,7 +2,7 @@ using Schoolme.Application;
 using Schoolme.Domain;
 using Schoolme.Infrastructure;
 using Schoolme.Presentation;
-using Schoolme.Presentation.Students.CourseEnrollment;
+using Schoolme.Presentation.Students.EnrollToCourse;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 

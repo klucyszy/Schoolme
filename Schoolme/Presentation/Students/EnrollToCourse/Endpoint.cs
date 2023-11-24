@@ -1,8 +1,8 @@
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
+using Schoolme.Application.Students.CourseEnrollment;
 using Schoolme.Common.Responses.Endpoints;
 
-namespace Schoolme.Presentation.Students.CourseEnrollment;
+namespace Schoolme.Presentation.Students.EnrollToCourse;
 
 public sealed record EnrollStudentInCourseRequest(
     Guid StudentId,
@@ -33,4 +33,9 @@ public static class Endpoint
         .Produces(StatusCodes.Status201Created)
         .Produces(StatusCodes.Status400BadRequest);
     }
+    
+    public sealed record EnrollStudentInCourseEndpointResponse(
+        Guid StudentId,
+        Guid CourseEnrollmentId
+    );
 }

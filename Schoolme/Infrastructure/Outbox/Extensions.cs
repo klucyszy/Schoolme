@@ -1,25 +1,33 @@
 using Microsoft.EntityFrameworkCore;
 using Schoolme.Infrastructure.Outbox.Configurations;
+using Schoolme.Infrastructure.Outbox.Entities;
 
 namespace Schoolme.Infrastructure.Outbox;
 
 public static class Extensions
 {
+    public static ModelBuilder ApplyOutboxConfiguration(this ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfiguration(new OutboxEventEntityTypeConfiguration());
+        
+        return modelBuilder;
+    }
+    
     public static IServiceCollection AddOutbox(this IServiceCollection services,
         IConfiguration configuration)
     {
-        OutboxOptions outboxOptions = new();
-        configuration.GetSection(OutboxOptions.Name).Bind(outboxOptions);
+        OutboxOptions options = new();
+        configuration.GetSection(OutboxOptions.Name).Bind(options);
         
-        services.AddDbContext<OutboxDbContext>(options =>
+        services.AddDbContext<OutboxDbContext>(opts =>
         {
-            if (outboxOptions.UseInMemoryOutbox)
+            if (options.UseInMemory)
             {
-                options.UseInMemoryDatabase(OutboxOptions.Name);
+                opts.UseInMemoryDatabase(OutboxOptions.Name);
             }
             else
             {
-                options.UseSqlServer(
+                opts.UseSqlServer(
                     configuration.GetConnectionString(OutboxOptions.Name),
                     sqlOptions =>
                     {

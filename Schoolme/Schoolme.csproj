@@ -18,6 +18,7 @@
 
     <ItemGroup>
       <Folder Include="Infrastructure\Outbox\Migrations\" />
+      <Folder Include="Infrastructure\Students\Database\Migrations\" />
     </ItemGroup>
 
     <ItemGroup>
